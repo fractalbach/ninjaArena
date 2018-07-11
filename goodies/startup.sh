@@ -4,10 +4,7 @@ ServiceName=ninjaServer.service
 
 # This script should be run while in the same directory as "ninjaServer.service"
 # if you are intending to update it.
-if [ --update "$1" ]
-then
-    cp "$ServiceName" /etc/systemd/system/"$ServiceName"
-fi
+sudo cp "$ServiceName" /etc/systemd/system/"$ServiceName"
 
 # Stop and disable the service (if it's there)
 sudo systemctl stop "$ServiceName"
