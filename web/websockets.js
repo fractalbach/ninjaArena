@@ -112,7 +112,7 @@ function addGraphValue(x, val) {
     let bar = document.querySelector("#graph").children[x];
     bar.setAttribute('x', 5 * x);
     bar.setAttribute('width', 5);
-    bar.setAttribute('height', 4 * val);
+    bar.setAttribute('height', val);
 }
 
 function updateAverageRTTValueText(value) {
