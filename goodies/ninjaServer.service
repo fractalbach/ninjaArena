@@ -6,8 +6,6 @@ After=networking.target
 
 [Service]
 Type=simple
-User=ninja1
-Group=ninjaGroup
 WorkingDirectory=/home/fractalbach/go/src/github.com/fractalbach/ninjaArena/web
 ExecStart=/home/fractalbach/go/bin/ninjaServer -a :80
 

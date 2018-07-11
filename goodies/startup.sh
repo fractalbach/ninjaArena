@@ -16,3 +16,6 @@ sudo systemctl daemon-reload
 # Enables and Starts the service again.
 sudo systemctl enable "$ServiceName"
 sudo systemctl start "$ServiceName"
+
+# Prints the service's status so you can see if everything worked correctly.
+systemctl status "$ServiceName"
