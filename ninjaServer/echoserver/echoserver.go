@@ -1,30 +1,19 @@
-package wshandle
+// package echoserver uses websockets and turns all received messages into CAPS.
+package echoserver
 
 import (
+	"bytes"
 	"github.com/gorilla/websocket"
 	"log"
-	"bytes"
-	"time"
 	"net/http"
-)
-
-type client struct {
-	name    string
-	channel chan<- string
-}
-
-const (
-	writeWait  = 10 * time.Second
-	pongWait   = 60 * time.Second
-	pingPeriod = (pongWait * 9) / 10
 )
 
 var (
 	upgrader = websocket.Upgrader{}
-	entering = make(chan client)
 )
 
-// handleWs is called by ninjaServer.go
+// HandleWs is called by ninjaServer.go and converts all received messages
+// into uppercase, and sends it back to the original source.
 func HandleWs(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -48,22 +37,3 @@ func HandleWs(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Println(err)
 }
-
-func broadcaster() {
-}
-
-// an example of some service.
-/*
-func service1(w http.ResponseWriter, r *http.Request) {
-}
-
-func service2(w http.ResponseWriter, r *http.Request) {
-}
-
-type Hub struct {
-	clients map[*Client]bool
-	broadcast chan []bytes
-	register chan *Client
-	unregister chan *Client
-}
-*/

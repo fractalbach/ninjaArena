@@ -8,7 +8,8 @@
 
   <style>
     body {
-	background: #999;
+	margin: 0;
+	scroll: none;
     }
     .BackgroundCanvas {
 	background: #f60;
@@ -23,9 +24,10 @@
 	position: absolute;
 	top: 0;
 	bottom: 0;
-	left: 10%;
+	left: 9%;
 	height: 90%;
 	width: 90%;
+	border: 1px solid;
     }
     #graph-axis-y-text {
 	position: absolute;
@@ -42,8 +44,22 @@
     }
     #graphbox {
 	border: 1px solid;
+	background: #eee;
     }
-    
+    #graphAverage {
+	position: fixed;
+	text-alignment: center;
+	left:10%;
+	top:50%;
+    }
+    line {
+	stroke: #555;
+    }
+    .graphline {
+	position: fixed;
+	right: 1%;
+	user-select: none;
+    }
     body,
     .BackgroundCanvas,
     .BackgroundSVG {
@@ -59,8 +75,94 @@
   <body>
     <div id="graph-axis-x-text">Websocket Ping Tests</div>
     <div id="graph-axis-y-text">Round Trip Time (ms)</div>
-    <svg id="graphbox" viewbox="0 0 400 100" preserveAspectRatio="none">
-      <g id="graph" fill="#8ef">
+
+    <svg id="graphbox" viewbox="0 0 400 400" preserveAspectRatio="none">
+      
+      <line x1="0" y1="100" x2="400" y2="100" />      
+      <line x1="0" y1="200" x2="400" y2="200" />
+      <line x1="0" y1="300" x2="400" y2="300" />
+      
+      <g id="graph" fill="#5ee" stroke="#000">
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
+	<rect x="0" y="0" width="0" height="0" />
 	<rect x="0" y="0" width="0" height="0" />
 	<rect x="0" y="0" width="0" height="0" />
 	<rect x="0" y="0" width="0" height="0" />
@@ -83,6 +185,15 @@
 	<rect x="0" y="0" width="0" height="0" />
       </g>
     </svg>
+
+        
+    <div class="graphline" style="top:0%;">0</div>
+    <div class="graphline" style="top:22.5%;">25</div>
+    <div class="graphline" style="top:45%;">50</div>
+    <div class="graphline" style="top:67.5%;">75</div>
+    <div class="graphline" style="top:90%;">100</div>
+
+    <div id="graphAverage"></div>
 
     <script src="websockets.js"></script>
     <!-- 

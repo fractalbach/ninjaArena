@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/fractalbach/ninjaArena/ninjaServer/wshandle"
+	"github.com/fractalbach/ninjaArena/ninjaServer/echoserver"
 )
 
 const HelpMessage = `
@@ -96,6 +96,7 @@ func runServer() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", serveHome)
 	mux.HandleFunc("/ws", serveWebSocket)
+	mux.HandleFunc("/ws/echo", serveWebSocketEcho)
 	mux.HandleFunc("/wss", serveSecureWebSocket)
 	s := &http.Server{
 		Addr:    addr,
@@ -116,7 +117,12 @@ func serveHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveWebSocket(w http.ResponseWriter, r *http.Request) {
-	wshandle.HandleWs(w, r)
+	fmt.Println(w, "Not yet implemented.")
+}
+
+
+func serveWebSocketEcho(w http.ResponseWriter, r *http.Request) {
+	echoserver.HandleWs(w, r)
 }
 
 func serveSecureWebSocket(w http.ResponseWriter, r *http.Request) {

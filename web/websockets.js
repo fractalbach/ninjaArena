@@ -13,7 +13,7 @@ AverageRTT: ${AverageTestRTT}
 
 class WebSocketHub {  
     constructor() {
-	this.conn = new WebSocket("ws://" + document.location.host + "/ws");
+	this.conn = new WebSocket("ws://" + document.location.host + "/ws/echo");
 	this.conn.onclose = WebSocketHub.DefaultHandleClose;
 	//this.conn.onmessage = this.HandlePingMessages;
 	this.conn.onmessage = WebSocketHub.DefaultHandleMessage;
@@ -34,23 +34,24 @@ class WebSocketHub {
     // and then calculates an average RTT using the data.
     async DoTestSequenceRTT() {
 	this.conn.onmessage = this.HandlePingMessages;
-	await sleep(2000);
+	await sleep(1000);
 	let msg;
-	for (let i=0; i<20; i++) {
+	for (let i=0; i<100; i++) {
 	    msg = JSON.stringify({
 		num: i,
 		time: (new Date()).getTime()
 	    });
 	    this.conn.send(msg);
-    	    await sleep(1000);
+    	    await sleep(10);
 	}
-	await sleep(1000);
+	await sleep(500);
 	AverageTestRTT = SumTestRTT / CountTestRTT;
 	console.log(
 	    "Sum:", SumTestRTT, '\n',
 	    "Count", CountTestRTT, '\n',
 	    "AverageRTT:", AverageTestRTT
 	);
+	updateAverageRTTValueText(AverageTestRTT);
 	this.conn.onmessage = this.HandlePingMessages;
     }
     
@@ -69,7 +70,6 @@ class WebSocketHub {
 	    console.log("Ping#", msg.NUM, "RTT:", sampleRTT, "ms");
 	    addGraphValue(msg.NUM, sampleRTT);
         }
-
     }
 
     // The value, alpha = 1/8, is reccomended by RFC 6298 for calculating
@@ -110,8 +110,13 @@ let make = function(name, attributes) {
 // 200 px / 200 ms = 1 px for each ms (y axis)
 function addGraphValue(x, val) {
     let bar = document.querySelector("#graph").children[x];
-    bar.setAttribute('x', 20 * x);
-    bar.setAttribute('width', 20);
-    bar.setAttribute('height', val);
+    bar.setAttribute('x', 5 * x);
+    bar.setAttribute('width', 5);
+    bar.setAttribute('height', 4 * val);
+}
+
+function updateAverageRTTValueText(value) {
+    document.querySelector("#graphAverage").textContent =
+	"AverageRTT=" + value + "ms";
 }
 
