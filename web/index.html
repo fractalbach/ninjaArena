@@ -21,8 +21,24 @@
     }
     svg {
 	position: absolute;
-	height: 100%;
-	width: 100%;
+	top: 0;
+	bottom: 0;
+	left: 10%;
+	height: 90%;
+	width: 90%;
+    }
+    #graph-axis-y-text {
+	position: absolute;
+	height: 90%;
+	writing-mode: vertical-rl;
+	top: 0;
+	left: 0;
+    }
+    #graph-axis-x-text{
+	position: absolute;
+	width: 90%;
+	bottom: 0px;
+	left: 10%;
     }
     #graphbox {
 	border: 1px solid;
@@ -41,7 +57,9 @@
   </style>
   
   <body>
-    <svg id="graphbox" viewbox="0 0 400 50" preserveAspectRatio="none">
+    <div id="graph-axis-x-text">Websocket Ping Tests</div>
+    <div id="graph-axis-y-text">Round Trip Time (ms)</div>
+    <svg id="graphbox" viewbox="0 0 400 100" preserveAspectRatio="none">
       <g id="graph" fill="#8ef">
 	<rect x="0" y="0" width="0" height="0" />
 	<rect x="0" y="0" width="0" height="0" />

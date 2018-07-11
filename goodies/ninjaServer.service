@@ -1,0 +1,15 @@
+[Unit]
+Description=The main server for Ninja-Arena.
+Documentation=https://github.com/fractalbach/ninjaArena
+ConditionPathExists=/home/fractalbach/go/src/ninjaArena
+After=networking.target
+
+[Service]
+Type=simple
+User=ninja1
+Group=ninjaGroup
+WorkingDirectory=/home/fractalbach/go/src/ninjaArena/web
+ExecStart=/home/fractalbach/go/bin/ninjaServer -a :80
+
+[Install]
+WantedBy=multi-user.target
