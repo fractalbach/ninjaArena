@@ -1,15 +1,22 @@
-# Just a script to generate svg or html snippets that would be otherwise
-# annoying to type.
-
+# Just a script to generate svg snippets and place them into an html document.
 from string import Template
-                
+from sys import argv
+
+# Use the given file as a template for the generated document.
+if len(argv) < 2:
+    print("needs an argument: filename")
+    exit(1)
+filename = argv[1]
+with open(filename, 'r') as f:
+    document = Template(f.read())
+    
+# Generate the document svg body.
 mapw = 1000
 maph = 1000
 rangex = 50
 rangey = 50
-
-tilew = mapw // rangex
-tileh = maph // rangey
+tilew = mapw / rangex
+tileh = maph / rangey
         
 box = Template('''<rect x='$x' y='$y' width='$tilew' height='$tilew' />''')
 body = ""
@@ -24,26 +31,4 @@ for i in range(0, rangex):
         )
         body += box.substitute(d) + "\n"
 
-print(Template('''
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Game Grid</title>
-  </head>
-
-  <style>
-    rect {
-	fill: #595;
-	stroke: #000;
-    }
-  </style>
-
-<body>  
-<svg id="map" viewbox="0 0 500 500" preserveAspectRatio="none">
-$body
-</svg>
-</body>
-</html>
-''').substitute(body=body))
+print(document.substitute(body=body))
