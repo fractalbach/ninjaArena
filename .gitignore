@@ -7,5 +7,6 @@
 .exe
 
 
-# html
-*.html
+# ignore html once it has been moved to another repo.
+# until then, keep *.html commented out.
+# *.html
