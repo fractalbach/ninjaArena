@@ -1,4 +1,14 @@
-# Server Goodies
+# Goodies
+
+The "goodies" directory holds extra code scripts or snippets that have useful
+functionality, but aren't neccesarily critical code for the client or server.
+(or ,at least, shouldn't be critical code).
+
+Client Goodies are usually experimental in nature, or are scripts to generate
+bits of code that needn't be handwritten.  For example, goodies/snippets started
+out with a python script used to generate a grid out of svg elements.  It didn't
+need to be a whole program the first time it was written.  Therefore, it was
+just a "goodie"
 
 Server Goodies are the odds n' ends that are needed to glue everything together
 so that it actually runs successfully.  As the complexity of the goodies
@@ -6,6 +16,23 @@ increases, they should be converted away from scripts and rewritten as
 full programs.
 
 
+
+# Client Goodies
+
+## Generating svg in html pages
+
+Sometimes, you need a lot of rectangles, and you want them in very specific places.
+You can use a script to generate them, because writing out each one would be
+far more work for a human than a computer. A human is good at coming up with a
+mathematical equation, which can be fed into a computer as instructions.  These
+instructions can do awesome things: like generating a ton of verbose svg rectangle
+elements. See [snippets/makeSvg.py](snippets/makeSvg.py).
+
+
+
+
+
+# Server Goodies
 
 ## How to Update Stuff
 
