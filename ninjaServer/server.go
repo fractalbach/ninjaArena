@@ -61,7 +61,7 @@ func init() {
 	flag.StringVar(&addr, "a", DefaultAddress, HelpAddress)
 	flag.StringVar(&index, "index", DefaultIndex, HelpIndex)
 	flag.BoolVar(&useStdinStdout, "io", false, HelpIO)
-	flag.BoolVar(&addrTLS, "tls", false, HelpAddressTLS)
+	flag.BoolVar(&usingTLS, "tls", false, HelpAddressTLS)
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, HelpMessage)
 		flag.PrintDefaults()
@@ -100,7 +100,7 @@ func runServer() {
 	mux.HandleFunc("/ws", serveWebSocket)
 	mux.HandleFunc("/ws/echo", serveWebSocketEcho)
 	if !usingTLS {
-		s = &http.Server{Addr: addr, Handler:mux,}
+		s := &http.Server{Addr: addr, Handler: mux}
 		log.Fatal(s.ListenAndServe())
 	}
 	m := &autocert.Manager{
@@ -110,9 +110,9 @@ func runServer() {
 	}
 	go http.ListenAndServe(":http", m.HTTPHandler(nil))
 	s := &http.Server{
-		Addr: ":https",
-		TLSConfig: &tls.Config{GetCertificate: m.GetCertificate,}
-		Handler: mux,
+		Addr:      ":https",
+		TLSConfig: &tls.Config{GetCertificate: m.GetCertificate},
+		Handler:   mux,
 	}
 	log.Fatal(s.ListenAndServeTLS("", ""))
 }
