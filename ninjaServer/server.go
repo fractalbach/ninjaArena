@@ -22,7 +22,7 @@ USAGE:
 EXAMPLES:
   ninjaServer -a localhost:8080
   ninjaServer -a=localhost:8080
-  ninjaServer -a :http -tls :https
+  ninjaServer -a :http -tls
 
 INFORMATION:
   Files will be served relative to the current directory,
@@ -41,35 +41,30 @@ OPTIONS:
 `
 
 const (
-	HelpAddress       = "Host Address and Port for Standard connections."
-	HelpAddressTLS    = "Host Address and Port for TLS connections."
-	HelpIndex         = "Homepage file"
-	HelpIO            = "Enable Stdin input and Stdout output."
-	DefaultAddress    = "localhost:8080"
-	DefaultAddressTLS = ""
-	DefaultIndex      = "index.html"
+	HelpAddress    = "Host Address and Port for Standard connections."
+	HelpAddressTLS = "Host Address and Port for TLS connections."
+	HelpIndex      = "Homepage file"
+	HelpIO         = "Enable Stdin input and Stdout output."
+	DefaultAddress = "localhost:8080"
+	DefaultIndex   = "index.html"
 )
 
 var (
 	useStdinStdout bool
 	usingTLS       bool
 	addr           string
-	addrTLS        string
 	index          string
 )
 
 func init() {
 	flag.StringVar(&addr, "address", DefaultAddress, HelpAddress)
 	flag.StringVar(&addr, "a", DefaultAddress, HelpAddress)
-	flag.StringVar(&addrTLS, "tls", DefaultAddressTLS, HelpAddressTLS)
 	flag.StringVar(&index, "index", DefaultIndex, HelpIndex)
 	flag.BoolVar(&useStdinStdout, "io", false, HelpIO)
+	flag.BoolVar(&addrTLS, "tls", false, HelpAddressTLS)
 	flag.Usage = func() {
 		fmt.Fprint(os.Stderr, HelpMessage)
 		flag.PrintDefaults()
-	}
-	if addrTLS != "" {
-		usingTLS = true
 	}
 }
 
@@ -104,27 +99,22 @@ func runServer() {
 	mux.HandleFunc("/", serveHome)
 	mux.HandleFunc("/ws", serveWebSocket)
 	mux.HandleFunc("/ws/echo", serveWebSocketEcho)
-	certManager := autocert.Manager{
+	if !usingTLS {
+		s = &http.Server{Addr: addr, Handler:mux,}
+		log.Fatal(s.ListenAndServe())
+	}
+	m := &autocert.Manager{
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: autocert.HostWhitelist("thebachend.com"),
 		Cache:      autocert.DirCache("certs"),
 	}
+	go http.ListenAndServe(":http", m.HTTPHandler(nil))
 	s := &http.Server{
-		Addr: addrTLS,
-		TLSConfig: &tls.Config{
-			GetCertificate: certManager.GetCertificate,
-		},
+		Addr: ":https",
+		TLSConfig: &tls.Config{GetCertificate: m.GetCertificate,}
 		Handler: mux,
 	}
-	log.Println("Listening and Serving on: ", addr)
-	if usingTLS {
-		go http.ListenAndServe(addr, certManager.HTTPHandler(nil))
-		log.Println("Listening and Serving TLS on: ", s.Addr)
-		log.Fatal(s.ListenAndServeTLS("", ""))
-	} else {
-		s.Addr = addr
-		log.Fatal(s.ListenAndServe())
-	}
+	log.Fatal(s.ListenAndServeTLS("", ""))
 }
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
