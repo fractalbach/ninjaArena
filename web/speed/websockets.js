@@ -13,7 +13,7 @@ AverageRTT: ${AverageTestRTT}
 
 class WebSocketHub {  
     constructor() {
-	this.conn = new WebSocket("wss://" + document.location.host + "/ws/echo");
+	this.conn = new WebSocket("wss://thebachend.com/ws/echo");
 	this.conn.onclose = WebSocketHub.DefaultHandleClose;
 	//this.conn.onmessage = this.HandlePingMessages;
 	this.conn.onmessage = WebSocketHub.DefaultHandleMessage;
